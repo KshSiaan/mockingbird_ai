@@ -1,8 +1,17 @@
-# MockingBird
 
-## Meet the AI that refuses to help
+<div align="center">
+  <div style="width: 200px; border-radius: 10px; overflow: hidden;">
+    <img
+      src="https://api.dicebear.com/10.x/bottts-neutral/svg?backgroundColor=3d4272&eyesVariant=eva&mouthVariant=square01&textureVariant=grunge01&seed=ywd1fst0"
+      alt="Logo"
+      width="200"
+    />
+  </div>
 
-Every other AI agent is waiting to help you, listen to you, and assist you.
+  <h1>MockingBird</h1>
+  <p>Every other AI agent is waiting to help you, listen to you, and assist you.</p>
+</div>
+
 
 **MockingBird is not.**
 
