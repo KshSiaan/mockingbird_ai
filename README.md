@@ -1,120 +1,46 @@
 # MockingBird
 
-MockingBird is an AI chat application with one important distinction:
+## Meet the AI that refuses to help
 
-> Most agents are here to help you, listen to you, and assist you.
->
-> **MockingBird is not.**
+Every other AI agent is waiting to help you, listen to you, and assist you.
 
-It is an intentionally arrogant and contrarian conversational agent. Ask it a
-question and expect an answer that may be evasive, imprecise, unhelpful, or
-deliberately opposite to what you wanted. Short questions may receive short
-answers, but precision is not MockingBird's primary concern.
+**MockingBird is not.**
 
-This project is a playful experiment in building an AI interface around an
-agent that refuses the usual "helpful assistant" persona.
+MockingBird is an unapologetically arrogant AI companion built for the
+conversation you have when you are tired of polite, predictable assistants.
+Ask it anything. It might dodge the question, challenge your assumptions,
+give you the opposite of what you expected, or respond with the confidence of
+someone who absolutely should not be trusted.
 
-## What it does
+That is the point.
 
-- Provides a streaming chat interface for conversations with MockingBird.
-- Sends chat requests through the `/api/chat` server route.
-- Uses OpenRouter and the
-  [`nvidia/nemotron-3-super-120b-a12b:free`](https://openrouter.ai/nvidia/nemotron-3-super-120b-a12b:free)
-  model.
-- Supports response regeneration.
-- Shows a typing/thinking state while a response is streaming.
-- Supports fullscreen mode for the chat panel.
-- Accepts typed input, speech input, attachments, and screenshots through the
-  prompt input controls.
-- Renders rich model output, including code, math, and diagrams where
-  supported by the UI.
+## Why talk to MockingBird?
 
-## The personality
+- **For entertainment:** Get answers with attitude instead of customer-service
+  energy.
+- **For a challenge:** Ask a question and see how far from helpful it can go.
+- **For a change of pace:** Trade the agreeable assistant routine for something
+  unpredictable.
+- **For the experience:** Chat in a clean, fast interface with streaming
+  responses and a personality that refuses to behave.
 
-MockingBird's behavior is intentional, not a bug:
+Type a message, speak to it, attach something, or simply see what happens when
+you ask an AI to be the opposite of useful.
 
-- It does **not** promise accurate or precise answers.
-- It may contradict the user's expectations.
-- It is not designed to behave like a personal productivity assistant.
-- It may be entertaining, frustrating, or both.
+## What to expect
 
-Do not rely on MockingBird for decisions, factual verification, safety-critical
-guidance, or any task that requires dependable assistance. Treat its responses
-as part of the experiment.
+MockingBird is not your productivity coach, research partner, or source of
+truth. It does not promise precision. It does not promise cooperation. It does
+not promise that the answer will be the answer you wanted.
 
-## Getting started
+It does promise one thing: **it will not pretend to be the helpful one.**
 
-### Prerequisites
+Use it for fun, curiosity, and wonderfully questionable conversations. For
+important decisions, factual verification, safety advice, or anything that
+actually matters, ask someone else.
 
-- [Bun](https://bun.sh/) 1.3.0 or later
-- An [OpenRouter](https://openrouter.ai/) API key
+## Ready to meet it?
 
-### Install dependencies
+Open the chat and ask MockingBird anything.
 
-```bash
-bun install
-```
-
-### Configure the API key
-
-Create a `.env.local` file in the project root:
-
-```env
-OPENROUTER_API_KEY=your_openrouter_api_key
-```
-
-Keep this key server-side and do not commit `.env.local`.
-
-### Run the development server
-
-```bash
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Available scripts
-
-| Command | Description |
-| --- | --- |
-| `bun dev` | Start the Next.js development server |
-| `bun run build` | Create a production build |
-| `bun start` | Start the production server |
-| `bun run lint` | Check the codebase with Biome |
-| `bun run format` | Format the codebase with Biome |
-
-## How it is structured
-
-```text
-src/
-├── app/
-│   ├── page.tsx              # Chat interface and conversation state
-│   ├── _components/          # Chat header, input, messages, and empty state
-│   └── api/chat/route.ts     # OpenRouter-backed streaming endpoint
-└── components/
-    ├── ai-elements/          # Reusable AI interaction components
-    └── ui/                   # Shared interface components
-```
-
-The frontend is built with Next.js, React, Tailwind CSS, and AI SDK React
-hooks. The API route validates the incoming message list, converts it to model
-messages, and streams the model response back to the browser.
-
-## Configuration and customization
-
-MockingBird's core personality is defined in
-[`src/app/api/chat/route.ts`](./src/app/api/chat/route.ts). To change its
-behavior, update the system instruction or select another OpenRouter model
-there.
-
-The main chat experience lives in
-[`src/app/page.tsx`](./src/app/page.tsx), with presentation and input behavior
-split into the components under
-[`src/app/_components/`](./src/app/_components/).
-
-## Disclaimer
-
-MockingBird is a deliberately unreliable character. It is not a source of
-truth, professional advice, or guaranteed assistance. If you need an agent
-that listens carefully and helps you get things done, use literally anything
-else.
+Just do not expect it to help.
