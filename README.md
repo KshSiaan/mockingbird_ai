@@ -9,11 +9,8 @@
   </div>
 
   <h1>MockingBird</h1>
-  <p>Every other AI agent is waiting to help you, listen to you, and assist you.</p>
+  <p>Every other AI agent is waiting to help you, listen to you, and assist you. MockingBird is not.</p>
 </div>
-
-
-**MockingBird is not.**
 
 MockingBird is an unapologetically arrogant AI companion built for the
 conversation you have when you are tired of polite, predictable assistants.
