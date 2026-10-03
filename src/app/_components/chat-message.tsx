@@ -1,0 +1,131 @@
+"use client";
+
+import { Fragment, memo, useCallback } from "react";
+import Image from "next/image";
+import { CopyIcon, RefreshCcwIcon } from "lucide-react";
+import type { UIMessage } from "ai";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  MessageResponse,
+  MessageActions,
+  MessageAction,
+} from "@/components/ai-elements/message";
+import { TypingIndicator } from "./typing-indicator";
+import { cn } from "@/lib/utils";
+
+const BotAvatar = () => (
+  <Avatar size="sm" className="shrink-0 shadow-sm">
+    <AvatarImage
+      src="https://api.dicebear.com/10.x/bottts-neutral/svg?backgroundColor=3d4272&eyesVariant=eva&mouthVariant=square01&textureVariant=grunge01&seed=ywd1fst0"
+      alt="mockingbird"
+    />
+    <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-white text-xs font-bold">
+      K
+    </AvatarFallback>
+  </Avatar>
+);
+
+const UserAvatar = () => {
+  return (
+    <Avatar size="sm" className="shrink-0 shadow-sm">
+      <AvatarImage
+        src={"https://api.dicebear.com/10.x/adventurer/svg?seed=wh7b03la"}
+        alt={"User"}
+      />
+      <AvatarFallback className="bg-gradient-to-br from-blue-500 to-cyan-500 text-white text-xs font-bold">
+        U
+      </AvatarFallback>
+    </Avatar>
+  );
+};
+
+export const BotTypingRow = () => (
+  <div className="flex items-end gap-2.5">
+    <BotAvatar />
+    <div className="rounded-2xl rounded-tl-sm bg-muted px-4 py-3">
+      <TypingIndicator />
+    </div>
+  </div>
+);
+
+interface ChatMessageRowProps {
+  message: UIMessage;
+  isLast: boolean;
+  status: string;
+  onRegenerate: () => void;
+}
+
+export const ChatMessageRow = memo(
+  ({ message, isLast, status, onRegenerate }: ChatMessageRowProps) => {
+    const isUser = message.role === "user";
+
+    return (
+      <>
+        {message.parts.map((part, i) => {
+          if (part.type !== "text") return null;
+
+          const isActivelyStreaming =
+            status === "streaming" && isLast && !isUser;
+          const showTypingDots = isActivelyStreaming && !part.text;
+
+          const handleCopy = () => navigator.clipboard.writeText(part.text);
+
+          return (
+            <Fragment key={`${message.id}-${i}`}>
+              <div
+                className={cn(
+                  "flex items-end gap-2.5",
+                  isUser && "flex-row-reverse",
+                )}
+              >
+                {isUser ? <UserAvatar /> : <BotAvatar />}
+                <div
+                  className={cn(
+                    "max-w-[72%] rounded-2xl text-sm leading-relaxed px-4 py-2.5",
+                    isUser
+                      ? "rounded-tr-sm bg-primary text-primary-foreground"
+                      : "rounded-tl-sm bg-muted text-foreground",
+                  )}
+                >
+                  {showTypingDots ? (
+                    <TypingIndicator />
+                  ) : (
+                    <MessageResponse
+                      className={cn(
+                        "[&_img]:my-2 [&_img]:block [&_img]:h-32 [&_img]:w-32 [&_img]:max-w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-border/60 [&_img]:bg-background [&_img]:object-contain [&_img]:p-1 sm:[&_img]:h-36 sm:[&_img]:w-36",
+                      )}
+                    >
+                      {part.text}
+                    </MessageResponse>
+                  )}
+                </div>
+              </div>
+              {!isUser && isLast && part.text && !isActivelyStreaming && (
+                <div className="ml-9">
+                  <MessageActions>
+                    <MessageAction
+                      onClick={onRegenerate}
+                      label="Retry"
+                      tooltip="Regenerate response"
+                    >
+                      <RefreshCcwIcon className="size-3" />
+                    </MessageAction>
+                    <MessageAction
+                      onClick={handleCopy}
+                      label="Copy"
+                      tooltip="Copy to clipboard"
+                    >
+                      <CopyIcon className="size-3" />
+                    </MessageAction>
+                  </MessageActions>
+                </div>
+              )}
+            </Fragment>
+          );
+        })}
+      </>
+    );
+  },
+);
+
+ChatMessageRow.displayName = "ChatMessageRow";
