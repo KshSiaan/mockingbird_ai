@@ -11,7 +11,7 @@ export const ChatHeader = ({ status }: ChatHeaderProps) => {
   const isThinking = status === "streaming";
 
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shrink-0">
+    <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden bg-background/95 px-2 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:gap-3 sm:px-4">
       <div className="relative shrink-0">
         <Image
           src="https://api.dicebear.com/10.x/bottts-neutral/svg?backgroundColor=3d4272&eyesVariant=eva&mouthVariant=square01&textureVariant=grunge01&seed=ywd1fst0"
@@ -29,11 +29,11 @@ export const ChatHeader = ({ status }: ChatHeaderProps) => {
           )}
         />
       </div>
-      <div className="min-w-0">
+      <div className="min-w-0 truncate">
         <div className="font-semibold text-sm leading-none">MockingBird</div>
         <div
           className={cn(
-            "text-xs mt-0.5 transition-colors duration-300",
+            "mt-0.5 truncate text-xs transition-colors duration-300",
             isThinking
               ? "text-amber-500 dark:text-amber-400"
               : "text-muted-foreground",

@@ -1,5 +1,10 @@
 "use client";
 
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
+import { InfoIcon, MaximizeIcon, MenuIcon, MinimizeIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Conversation,
@@ -7,30 +12,24 @@ import {
   ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
 import { PromptInputProvider } from "@/components/ai-elements/prompt-input";
-import { DefaultChatTransport } from "ai";
-import { useChat } from "@ai-sdk/react";
-import { ChatHeader } from "./_components/chat-header";
-import { ChatEmptyState } from "./_components/empty-state";
-import { ChatMessageRow, BotTypingRow } from "./_components/chat-message";
-import { ChatInput } from "./_components/chat-input";
-import { useSearchParams } from "next/navigation";
-
 import { Button } from "@/components/ui/button";
-import { InfoIcon, MaximizeIcon, MinimizeIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import {
-  Popover,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { ChatHeader } from "./_components/chat-header";
+import { ChatInput } from "./_components/chat-input";
+import { BotTypingRow, ChatMessageRow } from "./_components/chat-message";
+import { ChatEmptyState } from "./_components/empty-state";
 
 export default function Page() {
   const chatPanelRef = useRef<HTMLDivElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showNotice, setShowNotice] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -68,21 +67,7 @@ export default function Page() {
   const showTypingRow = isStreaming && lastMessage?.role === "user";
 
   return (
-    <main className="px-4 h-dvh py-4 flex items-start gap-4 container mx-auto">
-      <a
-        href="https://www.buymeacoffee.com/raven36"
-        className="absolute top-4 right-4 z-50 w-34"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <Image
-          src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=raven36&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"
-          alt="Buy me a coffee"
-          unoptimized
-          width={235}
-          height={60}
-        />
-      </a>
+    <main className="container mx-auto flex h-dvh items-start gap-4 px-2 py-2 sm:px-4 sm:py-4">
       <section className="w-1/2 h-full border rounded-lg hidden" />
       <div
         ref={chatPanelRef}
@@ -90,49 +75,9 @@ export default function Page() {
           isFullscreen ? "p-3 md:p-6" : ""
         }`}
       >
-        <div className="w-full flex items-center justify-between">
+        <div className="flex w-full min-w-0 items-center justify-between gap-1">
           <ChatHeader status={status} />
-          <div className="flex items-center gap-2">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <InfoIcon />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent align="end">
-                <PopoverHeader>
-                  <PopoverTitle>Notice</PopoverTitle>
-                  <PopoverDescription>
-                    AI-generated responses may occasionally be direct, blunt, or
-                    otherwise inappropriate in tone. Such wording is generated
-                    automatically, is not intended to offend or target any
-                    individual, and should not be interpreted as a personal
-                    statement, professional advice, or the views of the service
-                    provider. Please evaluate AI responses critically and report
-                    any response you believe is abusive, discriminatory,
-                    threatening, or otherwise inappropriate.
-                  </PopoverDescription>
-                </PopoverHeader>
-              </PopoverContent>
-            </Popover>
-            <Button variant="ghost" size="icon" asChild>
-              <Link
-                href="https://github.com/KshSiaan/mockingbird_ai"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <title>GithubIcon</title>
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                </svg>
-              </Link>
-            </Button>
+          <div className="flex shrink-0 items-center">
             <Button
               size="icon"
               variant="ghost"
@@ -143,6 +88,86 @@ export default function Page() {
             >
               {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
             </Button>
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button size="icon" variant="ghost" aria-label="Open menu">
+                  <MenuIcon />
+                </Button>
+              </SheetTrigger>
+              <SheetContent
+                side="top"
+                className="max-h-[85dvh] overflow-y-auto"
+              >
+                <SheetHeader>
+                  <SheetTitle>MockingBird menu</SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col gap-5 px-4 pb-6">
+                  <div className="flex items-center justify-between gap-4">
+                    <a
+                      href="https://www.buymeacoffee.com/raven36"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Buy me a coffee"
+                    >
+                      <Image
+                        src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=raven36&button_colour=5F7FFF&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00"
+                        alt="Buy me a coffee"
+                        unoptimized
+                        width={235}
+                        height={60}
+                        className="h-auto w-[180px]"
+                      />
+                    </a>
+                    <div className="flex shrink-0 items-center gap-1">
+                      <Button variant="ghost" size="icon" asChild>
+                        <Link
+                          href="https://github.com/KshSiaan/mockingbird_ai"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Open MockingBird on GitHub"
+                        >
+                          <svg
+                            aria-hidden="true"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.23c-3.34.73-4.04-1.42-4.04-1.42-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.05.14 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.19.69.8.58A12.01 12.01 0 0 0 24 12C24 5.37 18.63 0 12 0Z" />
+                          </svg>
+                        </Link>
+                      </Button>
+                      <Button
+                        variant={showNotice ? "secondary" : "ghost"}
+                        size="icon"
+                        type="button"
+                        onClick={() => setShowNotice((visible) => !visible)}
+                        aria-label="Show notice"
+                        aria-expanded={showNotice}
+                      >
+                        <InfoIcon />
+                      </Button>
+                    </div>
+                  </div>
+                  {showNotice && (
+                    <div className="flex flex-col gap-2 text-sm text-muted-foreground">
+                      <h2 className="font-medium text-foreground">Notice</h2>
+                      <p>
+                        AI-generated responses may occasionally be direct,
+                        blunt, or otherwise inappropriate in tone. Such wording
+                        is generated automatically, is not intended to offend or
+                        target any individual, and should not be interpreted as
+                        a personal statement, professional advice, or the views
+                        of the service provider.
+                      </p>
+                      <p>
+                        Please evaluate AI responses critically and report any
+                        response you believe is abusive, discriminatory,
+                        threatening, or otherwise inappropriate.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
 
