@@ -16,7 +16,6 @@ import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -90,7 +89,12 @@ export default function Page() {
             </Button>
             <Sheet>
               <SheetTrigger asChild>
-                <Button size="icon" variant="ghost" aria-label="Open menu">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  aria-label="Open menu"
+                  className={isFullscreen ? "hidden" : ""}
+                >
                   <MenuIcon />
                 </Button>
               </SheetTrigger>
