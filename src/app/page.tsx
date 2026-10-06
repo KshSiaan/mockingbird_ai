@@ -98,7 +98,7 @@ export default function Page() {
                 side="top"
                 className="max-h-[85dvh] overflow-y-auto"
               >
-                <SheetHeader>
+                <SheetHeader className="hidden">
                   <SheetTitle>MockingBird menu</SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-5 px-4 pb-6">
