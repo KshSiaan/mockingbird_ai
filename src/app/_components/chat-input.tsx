@@ -80,7 +80,7 @@ export const ChatInput = ({ status, onSubmit }: ChatInputProps) => {
         <PromptInputSubmit
           status={isStreaming ? "streaming" : "ready"}
           disabled={!controller.textInput.value.trim()}
-          className="absolute bottom-1 right-1"
+          className="absolute bottom-1 right-1 rounded-2xl"
         />
       </PromptInputFooter>
     </PromptInput>
