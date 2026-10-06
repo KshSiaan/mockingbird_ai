@@ -49,12 +49,13 @@ export const ChatInput = ({ status, onSubmit }: ChatInputProps) => {
         onSubmit({ text: message.text });
         speechAccumulatorRef.current = "";
       }}
-      className="w-full relative rounded-2xl border shadow-sm"
+      className="w-full relative rounded-2xl border shadow-sm ring-0!"
     >
       <PromptInputBody>
         <AttachmentsDisplay />
         <PromptInputTextarea
           placeholder="Ask MockingBird anything..."
+          className="ring-0!"
           // disabled={isStreaming}
         />
       </PromptInputBody>
