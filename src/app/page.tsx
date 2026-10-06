@@ -101,7 +101,7 @@ export default function Page() {
                 <SheetHeader className="hidden">
                   <SheetTitle>MockingBird menu</SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col gap-5 px-4 py-6">
+                <div className="flex flex-col gap-5 px-4 py-8">
                   <div className="flex items-center justify-between gap-4">
                     <a
                       href="https://www.buymeacoffee.com/raven36"
