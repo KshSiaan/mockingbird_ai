@@ -8,7 +8,7 @@ export const ChatEmptyState = () => (
     <div className="relative">
       <div className="absolute inset-0 bg-linear-to-br from-violet-500/20 to-purple-600/20 rounded-3xl blur-2xl scale-150" />
       <Image
-        src="https://api.dicebear.com/10.x/bottts-neutral/svg?backgroundColor=3d4272&eyesVariant=eva&mouthVariant=square01&textureVariant=grunge01&seed=ywd1fst0"
+        src="/logo.png"
         alt="Khuki"
         width={72}
         unoptimized

@@ -14,7 +14,7 @@ export const ChatHeader = ({ status }: ChatHeaderProps) => {
     <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden bg-background/95 px-2 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/60 sm:gap-3 sm:px-4">
       <div className="relative shrink-0">
         <Image
-          src="https://api.dicebear.com/10.x/bottts-neutral/svg?backgroundColor=3d4272&eyesVariant=eva&mouthVariant=square01&textureVariant=grunge01&seed=ywd1fst0"
+          src="/logo.png"
           alt="Khuki"
           width={38}
           height={38}

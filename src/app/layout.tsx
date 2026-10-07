@@ -38,6 +38,14 @@ export const metadata: Metadata = {
     title,
     description,
     locale: "en_US",
+    images: [
+      {
+        url: "/og.webp",
+        width: 1200,
+        height: 630,
+        alt: "MockingBird",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
