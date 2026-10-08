@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
 const BotAvatar = () => (
   <Avatar size="sm" className="shrink-0 shadow-sm">
     <AvatarImage
-      src="https://api.dicebear.com/10.x/bottts-neutral/svg?backgroundColor=3d4272&eyesVariant=eva&mouthVariant=square01&textureVariant=grunge01&seed=ywd1fst0"
+      src="/logo.png"
       alt="mockingbird"
     />
     <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-white text-xs font-bold">
