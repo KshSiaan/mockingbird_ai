@@ -12,6 +12,7 @@ import {
   ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
 import { PromptInputProvider } from "@/components/ai-elements/prompt-input";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -49,10 +50,13 @@ export default function Page() {
     await chatPanelRef.current?.requestFullscreen();
   }, []);
 
-  const { messages, sendMessage, status, regenerate } = useChat({
+  const { messages, sendMessage, status, error, regenerate } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
     }),
+    onError: (chatError) => {
+      console.error("Chat request error", chatError);
+    },
   });
 
   const sendWithConfig = useCallback(
@@ -191,6 +195,27 @@ export default function Page() {
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
+
+        {error && (
+          <div className="px-3 pb-3">
+            <Alert variant="destructive">
+              <AlertTitle>Unable to get a response</AlertTitle>
+              <AlertDescription className="flex flex-wrap items-center justify-between gap-2">
+                <span>
+                  {error.message || "Something went wrong. Please try again."}
+                </span>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => regenerate()}
+                >
+                  Retry
+                </Button>
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
 
         <div className="p-3 bg-background/95 shrink-0">
           <PromptInputProvider>
